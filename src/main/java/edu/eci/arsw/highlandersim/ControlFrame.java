@@ -91,6 +91,7 @@ public class ControlFrame extends JFrame {
                 /*
 				 * COMPLETAR
                  */
+            	
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
@@ -127,6 +128,17 @@ public class ControlFrame extends JFrame {
         JButton btnStop = new JButton("STOP");
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
+        btnStop.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent event) {
+        		for(Immortal i : immortals) {
+        			i.muerto();
+        		}
+        		
+        		JOptionPane.showMessageDialog(null, "La simulacion ha sido detenida!");
+                System.exit(0);
+                
+        	}
+        });
 
         scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
