@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class HostBlackListsValidator {
 
     private static final int BLACK_LIST_ALARM_COUNT=5;
+    private boolean fin = false;
     
     /**
      * Check the given host's IP address in all the available black lists,
@@ -35,7 +36,6 @@ public class HostBlackListsValidator {
     public List<Integer> checkHost(String ipaddress, int numeroThreads) throws InterruptedException{
         
         LinkedList<Integer> blackListOcurrences=new LinkedList<>();
-        
         int ocurrencesCount=0;
         int checkedListsCount=0;
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
@@ -47,7 +47,7 @@ public class HostBlackListsValidator {
         
         for (int i=0; i<numeroThreads; i++){
         		//int valor = skds.getRegisteredServersCount()%numeroThreads;
-        		HostBlackListThread running = new HostBlackListThread(ipaddress, inicio, fin, skds);
+        		HostBlackListThread running = new HostBlackListThread(ipaddress, inicio, fin, skds, this);
         		running.start();
         		threads.add(running);
         		inicio = fin + 1;
@@ -84,10 +84,16 @@ public class HostBlackListsValidator {
         
         return blackListOcurrences;
     }
-    
-    
+      
     private static final Logger LOG = Logger.getLogger(HostBlackListsValidator.class.getName());
     
+    public void setFin(boolean fin)
+    {
+    	this.fin = fin;
+    }
     
-    
+    public boolean getFin()
+    {
+    	return fin;
+    }
 }

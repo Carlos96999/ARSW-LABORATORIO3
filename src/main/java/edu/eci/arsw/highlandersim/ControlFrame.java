@@ -94,12 +94,9 @@ public class ControlFrame extends JFrame {
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
+                    im.pausar();
                 }
-
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
-                
-                
-
             }
         });
         toolBar.add(btnPauseAndCheck);
@@ -111,7 +108,9 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
-
+                for (Immortal im : immortals) {
+                    im.reanudar();
+                }
             }
         });
 

@@ -19,7 +19,7 @@ public class Main {
         //Se cambio la clase Main, para poder obtener los datos al ejecutar con cierta cantidad de Threads
         int n = Runtime.getRuntime().availableProcessors();
         System.out.println("ss: "+n);
-        List<Integer> blackListOcurrences=hblv.checkHost("200.24.34.55", 500);
+        List<Integer> blackListOcurrences=hblv.checkHost("200.24.34.55", 4);
         System.out.println("The host was found in the following blacklists:"+blackListOcurrences);
         long finTiempo = System.currentTimeMillis();
         System.out.println(finTiempo - inicioTiempo);

@@ -16,7 +16,8 @@ public class Immortal extends Thread {
     private final String name;
 
     private final Random r = new Random(System.currentTimeMillis());
-
+    private boolean pausar;
+    private boolean detener;
 
     public Immortal(String name, List<Immortal> immortalsPopulation, int health, int defaultDamageValue, ImmortalUpdateReportCallback ucb) {
         super(name);
@@ -25,32 +26,53 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue=defaultDamageValue;
+        pausar = false;
+        detener = false;
     }
 
+    public synchronized void pausar()
+    {
+    	pausar = true;
+    }
+    
+    public synchronized void reanudar()
+    {
+    	pausar = false;
+    	this.notify();
+    }
+    
     public void run() {
 
-        while (true) {
-            Immortal im;
-
-            int myIndex = immortalsPopulation.indexOf(this);
-
-            int nextFighterIndex = r.nextInt(immortalsPopulation.size());
-
-            //avoid self-fight
-            if (nextFighterIndex == myIndex) {
-                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
-            }
-
-            im = immortalsPopulation.get(nextFighterIndex);
-
-            this.fight(im);
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        while (!detener) {
+        	try
+        	{
+	            Immortal im;
+	            synchronized(this)
+	            {
+	            	if (pausar)
+	            	{
+	            		wait();
+	            	}
+	            }
+				    int myIndex = immortalsPopulation.indexOf(this);
+	
+				    int nextFighterIndex = r.nextInt(immortalsPopulation.size());
+	
+				    //avoid self-fight
+				    if (nextFighterIndex == myIndex) {
+				        nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
+				    }
+	
+				    im = immortalsPopulation.get(nextFighterIndex);
+	
+				    this.fight(im);
+	
+				    try {
+				        Thread.sleep(1);
+				    } catch (InterruptedException e) {
+				        e.printStackTrace();
+				    }
+        	}catch(InterruptedException e) {e.printStackTrace();}
         }
 
     }
