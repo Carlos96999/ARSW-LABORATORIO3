@@ -164,7 +164,10 @@ Se cumple con el invariante ademas de que la solucion fue la apropiada, esto se 
 
 	* Analizando el esquema de funcionamiento de la simulación, esto podría crear una condición de carrera? Implemente la funcionalidad, ejecute la simulación y observe qué problema se presenta cuando hay muchos 'inmortales' en la misma. Escriba sus conclusiones al respecto en el archivo RESPUESTAS.txt.
 
-[respuestas.txt](https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/RESPUESTAS.txt)
+```
+A continuacion se deja el acceso directo a el archivo RESPUESTAS.txt
+```
+[RESPUESTAS.txt](https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/RESPUESTAS.txt)
 
 ```
 Se cambio el metodo run()
