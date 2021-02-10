@@ -1,6 +1,3 @@
-
-  
-  
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software – ARSW
 
@@ -39,7 +36,8 @@ Al realizar los cambios pertinentes se puede evidenciar que el consumo de la CPU
 Teniendo en cuenta los conceptos vistos de condición de carrera y sincronización, haga una nueva versión -más eficiente- del ejercicio anterior (el buscador de listas negras). En la versión actual, cada hilo se encarga de revisar el host en la totalidad del subconjunto de servidores que le corresponde, de manera que en conjunto se están explorando la totalidad de servidores. Teniendo esto en cuenta, haga que:
 
 - La búsqueda distribuida se detenga (deje de buscar en las listas negras restantes) y retorne la respuesta apenas, en su conjunto, los hilos hayan detectado el número de ocurrencias requerido que determina si un host es confiable o no (_BLACK_LIST_ALARM_COUNT_).  
-- Lo anterior, garantizando que no se den condiciones de carrera.  
+- Lo anterior, garantizando que no se den condiciones de carrera. 
+
 	```
 	    Después de implementar la solución, podemos evidenciar que termino al momento de encontrar todas las ocurrencias.
 	```
@@ -66,15 +64,18 @@ Sincronización y Dead-Locks.
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigDos.PNG?raw=true">  
 	
 3. Ejecute la aplicación y verifique cómo funcionan las opción ‘pause and check’. Se cumple el invariante?  
+
 	``
 	Lastimosamente el invariante no se cumple en el caso, los valores siempre son diferentes.
 	``
+	
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigTres.PNG?raw=true">    
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigTresDos.PNG?raw=true">    
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigTresTres.PNG?raw=true">    
 	
 
 4. Una primera hipótesis para que se presente la condición de carrera para dicha función (pause and check), es que el programa consulta la lista cuyos valores va a imprimir, a la vez que otros hilos modifican sus valores. Para corregir esto, haga lo que sea necesario para que efectivamente, antes de imprimir los resultados actuales, se pausen todos los demás hilos. Adicionalmente, implemente la opción ‘resume’.
+
 	```
 	Implementamos nuevos métodos de tipo synchronized para manejar la pausa y la reanudación de los hilos.  
 	Añadimos un bloque de código en el método run para tener un control al momento de que los personajes sean detenidos.  
@@ -84,6 +85,7 @@ Sincronización y Dead-Locks.
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCuatroDos.PNG?raw=true">    
 
 5. Verifique nuevamente el funcionamiento (haga clic muchas veces en el botón). Se cumple o no el invariante?.
+
 	```
 	El invariante sigue sin cumplirse después de esto, ya que lo realizado fue para detener y reanudar la partida de los personajes. 
 	```
@@ -100,18 +102,93 @@ Sincronización y Dead-Locks.
 		}
 	}
 	```
+	
+	```
+	Para lo siguiente se propone hacer un synchronized sobre el metodo y sobre i2 para garantizar quien entra en estos, esto se implementa en el metodo fight() de la clase Immortal
+	```
+	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto6.PNG?raw=true">    
 
 7. Tras implementar su estrategia, ponga a correr su programa, y ponga atención a si éste se llega a detener. Si es así, use los programas jps y jstack para identificar por qué el programa se detuvo.
 
+```
+El programa se detiene porque hay dos immortales que se atacan sulmutaneamente y al realizar esto bloquean el programa, esto se evidencia en las siguientes imagenes:
+```
+
+```
+Programa bloqueado:
+```
+
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto7.PNG?raw=true">
+
+```
+jps
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/jps.PNG?raw=true"> 
+
+```
+stack
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/jstack.PNG?raw=true"> 
+
 8. Plantee una estrategia para corregir el problema antes identificado (puede revisar de nuevo las páginas 206 y 207 de _Java Concurrency in Practice_).
+
+```
+Para implementar esto se utilizo AtomicInteger(), y esto es para que las operaciones se hagan de manera atomica para evitar que los Threads accedan a el valor de la vida de los Inmmortal con esto se aegura cojerlo cada uno de manera independiente.
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto8.PNG?raw=true"> 
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto8Frame.PNG?raw=true"> 
 
 9. Una vez corregido el problema, rectifique que el programa siga funcionando de manera consistente cuando se ejecutan 100, 1000 o 10000 inmortales. Si en estos casos grandes se empieza a incumplir de nuevo el invariante, debe analizar lo realizado en el paso 4.
 
-10. Un elemento molesto para la simulación es que en cierto punto de la misma hay pocos 'inmortales' vivos realizando peleas fallidas con 'inmortales' ya muertos. Es necesario ir suprimiendo los inmortales muertos de la simulación a medida que van muriendo. Para esto:
-	* Analizando el esquema de funcionamiento de la simulación, esto podría crear una condición de carrera? Implemente la funcionalidad, ejecute la simulación y observe qué problema se presenta cuando hay muchos 'inmortales' en la misma. Escriba sus conclusiones al respecto en el archivo RESPUESTAS.txt.
-	* Corrija el problema anterior __SIN hacer uso de sincronización__, pues volver secuencial el acceso a la lista compartida de inmortales haría extremadamente lenta la simulación.
+```
+Se cumple con el invariante ademas de que la solucion fue la apropiada, esto se evidencia en las siguiente imagenes.
+```
 
+```
+100 Immortals
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto9-100.PNG?raw=true"> 
+
+```
+1000 Immortals
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto9-1000.PNG?raw=true"> 
+
+```
+10000 Immortals
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto9-10000.PNG?raw=true"> 
+
+
+10. Un elemento molesto para la simulación es que en cierto punto de la misma hay pocos 'inmortales' vivos realizando peleas fallidas con 'inmortales' ya muertos. Es necesario ir suprimiendo los inmortales muertos de la simulación a medida que van muriendo. Para esto:
+
+	* Analizando el esquema de funcionamiento de la simulación, esto podría crear una condición de carrera? Implemente la funcionalidad, ejecute la simulación y observe qué problema se presenta cuando hay muchos 'inmortales' en la misma. Escriba sus conclusiones al respecto en el archivo RESPUESTAS.txt.
+
+[respuestas.txt]()
+
+```
+Se cambio el metodo run()
+```
+
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto10run.PNG?raw=true"> 
+	
+	* Corrija el problema anterior __SIN hacer uso de sincronización__, pues volver secuencial el acceso a la lista compartida de inmortales haría extremadamente lenta la simulación.
+	
+```
+Se cambio el metodo fight()
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto10Fight.PNG?raw=true"> 
+	
 11. Para finalizar, implemente la opción STOP.
 
+```
+Finalmente se implementa la funcionalidad para el boton STOP.
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto11.PNG?raw=true"> 
+
+```
+Prueba de la funcionalidad de STOP.
+```
+<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/punto11Stop.PNG?raw=true"> 
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />Este contenido hace parte del curso Arquitecturas de Software del programa de Ingeniería de Sistemas de la Escuela Colombiana de Ingeniería, y está licenciado como <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
