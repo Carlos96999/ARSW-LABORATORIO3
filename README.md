@@ -41,7 +41,7 @@ Teniendo en cuenta los conceptos vistos de condición de carrera y sincronizaci�
 - La búsqueda distribuida se detenga (deje de buscar en las listas negras restantes) y retorne la respuesta apenas, en su conjunto, los hilos hayan detectado el número de ocurrencias requerido que determina si un host es confiable o no (_BLACK_LIST_ALARM_COUNT_).  
 - Lo anterior, garantizando que no se den condiciones de carrera.  
 	```
-	    Después de implementar la solución, podemos evidenciar que termino al momento de encontrar todas las ocurrencias
+	    Después de implementar la solución, podemos evidenciar que termino al momento de encontrar todas las ocurrencias.
 	```
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosUno.PNG?raw=true">
 
@@ -60,12 +60,14 @@ Sincronización y Dead-Locks.
 
 2. Revise el código e identifique cómo se implemento la funcionalidad antes indicada. Dada la intención del juego, un invariante debería ser que la sumatoria de los puntos de vida de todos los jugadores siempre sea el mismo(claro está, en un instante de tiempo en el que no esté en proceso una operación de incremento/reducción de tiempo). Para este caso, para N jugadores, cual debería ser este valor?.
 
-	```Teniendo en cuenta que el valor de la vida es de 100, para N jugadores debería ser 100*N
+	```
+	Teniendo en cuenta que el valor de la vida es de 100, para N jugadores debería ser 100*N.
 	```
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigDos.PNG?raw=true">  
 	
 3. Ejecute la aplicación y verifique cómo funcionan las opción ‘pause and check’. Se cumple el invariante?.
-	``Lastimosamente el invariante no se cumple en el caso, los valores siempre son diferentes
+	``
+	Lastimosamente el invariante no se cumple en el caso, los valores siempre son diferentes.
 	``
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigTres.PNG?raw=true">    
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigTresDos.PNG?raw=true">    
@@ -73,14 +75,18 @@ Sincronización y Dead-Locks.
 	
 
 4. Una primera hipótesis para que se presente la condición de carrera para dicha función (pause and check), es que el programa consulta la lista cuyos valores va a imprimir, a la vez que otros hilos modifican sus valores. Para corregir esto, haga lo que sea necesario para que efectivamente, antes de imprimir los resultados actuales, se pausen todos los demás hilos. Adicionalmente, implemente la opción ‘resume’.
-	```Implementamos nuevos métodos de tipo synchronized para manejar la pausa y la reanudación de los hilos.  
-	```Añadimos un bloque de código en el método run para tener un control al momento de que los personajes sean detenidos.  
+	```
+	Implementamos nuevos métodos de tipo synchronized para manejar la pausa y la reanudación de los hilos.  
+	Añadimos un bloque de código en el método run para tener un control al momento de que los personajes sean detenidos.  
+	```
 	
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCuatro.PNG?raw=true">    
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCuatroDos.PNG?raw=true">    
 
 5. Verifique nuevamente el funcionamiento (haga clic muchas veces en el botón). Se cumple o no el invariante?.
-	```El invariante sigue sin cumplirse después de esto, ya que lo realizado fue para detener y reanudar la partida de los personajes.  
+	```
+	El invariante sigue sin cumplirse después de esto, ya que lo realizado fue para detener y reanudar la partida de los personajes. 
+	```
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCinco.PNG?raw=true">    
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCincoDos.PNG?raw=true">      
 	<img src="https://github.com/Carlos96999/ARSW-LABORATORIO3/blob/main/img/parteDosHigCincoTres.PNG?raw=true">    
